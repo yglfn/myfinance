@@ -1,4 +1,4 @@
-const CACHE_NAME = 'finsmart-v9';
+const CACHE_NAME = 'finsmart-v10';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
