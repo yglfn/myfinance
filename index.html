@@ -921,6 +921,23 @@
       updatePinDots();
     }
 
+    function pinPress(btn, val) {
+      // Ripple effect
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const size = btn.offsetWidth;
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = '0px';
+      ripple.style.top = '0px';
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 500);
+      // Press visual
+      btn.classList.add('pressed');
+      setTimeout(() => btn.classList.remove('pressed'), 150);
+      if (val === 'del') { pinDelete(); }
+      else { pinInput(val); }
+    }
+
     function updatePinDots() {
       const dots = document.querySelectorAll('#pinDots .pin-dot');
       dots.forEach((d, i) => {
@@ -935,9 +952,13 @@
 
       const hash = await sha256(auth.pinSalt + pinBuffer);
       if (hash === auth.pinHash) {
+        // Success animation
+        document.querySelectorAll('#pinDots .pin-dot').forEach(d => {
+          d.className = 'pin-dot success';
+        });
         localStorage.removeItem(LOCKOUT_KEY);
         localStorage.removeItem(ATTEMPTS_KEY);
-        showApp();
+        setTimeout(() => { pinBuffer = ''; showApp(); }, 350);
       } else {
         // Error animation
         document.querySelectorAll('#pinDots .pin-dot').forEach(d => { d.className = 'pin-dot error'; });
@@ -987,6 +1008,34 @@
       document.getElementById('loginUsername').value = '';
       document.getElementById('loginPassword').value = '';
       showScreen('login');
+    }
+
+    // ===== CONFIRMATION DIALOG =====
+    function showGenericDialog(icon, title, desc, confirmText, onConfirm) {
+      document.getElementById('genericDialogIcon').innerHTML = icon;
+      document.getElementById('genericDialogTitle').textContent = title;
+      document.getElementById('genericDialogDesc').textContent = desc;
+      const confirmBtn = document.getElementById('genericDialogConfirm');
+      confirmBtn.textContent = confirmText;
+      confirmBtn.onclick = function() {
+        closeGenericDialog();
+        onConfirm();
+      };
+      document.getElementById('genericDialog').classList.add('show');
+    }
+
+    function closeGenericDialog() {
+      document.getElementById('genericDialog').classList.remove('show');
+    }
+
+    function confirmLogout() {
+      showGenericDialog(
+        '<span class="material-symbols-rounded" style="font-size:40px;color:var(--error)">logout</span>',
+        'Keluar dari Akun?',
+        'Anda harus memasukkan kata sandi lagi untuk masuk. Data tetap tersimpan.',
+        'Keluar',
+        fullLogout
+      );
     }
 
     // ===== SET PIN (called from within app) =====
@@ -1367,6 +1416,17 @@
     // ===== MODAL CLOSE ON BACKDROP =====
     document.getElementById('transactionModal').addEventListener('click', function(e) {
       if (e.target === this) closeModal();
+    });
+    document.getElementById('genericDialog').addEventListener('click', function(e) {
+      if (e.target === this) closeGenericDialog();
+    });
+
+    // ===== KEYBOARD SUPPORT FOR PIN =====
+    document.addEventListener('keydown', function(e) {
+      const lockScreen = document.getElementById('screenLock');
+      if (!lockScreen.classList.contains('active')) return;
+      if (e.key >= '0' && e.key <= '9') { pinInput(e.key); }
+      else if (e.key === 'Backspace') { pinDelete(); }
     });
 
     // ===== PWA =====
