@@ -305,7 +305,7 @@
     .pin-dot.filled { background: var(--primary); border-color: var(--primary); }
     .pin-dot.error { background: var(--error); border-color: var(--error); animation: shake 0.4s; }
     .pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 280px; width: 100%; }
-    .pin-key { width: 72px; height: 72px; border-radius: var(--round-full); border: 1.5px solid var(--outline-variant); background: var(--surface-container-lowest); font-size: 24px; font-weight: 500; font-family: var(--font-family); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; margin: 0 auto; position: relative; overflow: hidden; }
+    .pin-key { width: 72px; height: 72px; border-radius: var(--round-full); border: 1.5px solid var(--outline-variant); background: var(--surface-container-lowest); font-size: 24px; font-weight: 500; font-family: var(--font-family); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; margin: 0 auto; position: relative; overflow: hidden; touch-action: manipulation; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
     .pin-key:hover { background: var(--surface-container); }
     .pin-key:active { background: var(--primary-container); border-color: var(--primary); transform: scale(0.92); }
     .pin-key.pressed { background: var(--primary-container); border-color: var(--primary); transform: scale(0.92); }
