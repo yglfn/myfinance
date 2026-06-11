@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Finance App - Home Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-container": "#fefcff",
+                      "on-primary-fixed": "#0c006b",
+                      "on-background": "#1a1c1f",
+                      "on-secondary-fixed-variant": "#004493",
+                      "primary-fixed-dim": "#c2c1ff",
+                      "secondary-container": "#0070eb",
+                      "tertiary-fixed": "#f6d9ff",
+                      "on-tertiary-fixed-variant": "#7201a2",
+                      "background": "#f9f9fe",
+                      "inverse-surface": "#2e3034",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-container": "#feeeff",
+                      "outline": "#777586",
+                      "on-surface": "#1a1c1f",
+                      "surface-container": "#ededf2",
+                      "on-primary-container": "#f4f1ff",
+                      "surface-container-low": "#f3f3f8",
+                      "on-primary-fixed-variant": "#332dbc",
+                      "primary": "#4441cc",
+                      "inverse-primary": "#c2c1ff",
+                      "secondary": "#0058bc",
+                      "primary-container": "#5e5ce6",
+                      "on-error": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "surface": "#f9f9fe",
+                      "surface-dim": "#d9dade",
+                      "tertiary-fixed-dim": "#e8b3ff",
+                      "tertiary-container": "#9f42ce",
+                      "surface-tint": "#4d4ad5",
+                      "secondary-fixed": "#d8e2ff",
+                      "outline-variant": "#c7c4d7",
+                      "on-surface-variant": "#464554",
+                      "tertiary": "#8423b3",
+                      "inverse-on-surface": "#f0f0f5",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "on-secondary": "#ffffff",
+                      "surface-bright": "#f9f9fe",
+                      "error": "#ba1a1a",
+                      "surface-container-highest": "#e2e2e7",
+                      "surface-container-high": "#e8e8ed",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed": "#310048",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-variant": "#e2e2e7",
+                      "on-secondary-fixed": "#001a41",
+                      "error-container": "#ffdad6",
+                      "primary-fixed": "#e2dfff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "20px",
+                      "stack-md": "16px",
+                      "gutter": "16px",
+                      "stack-lg": "24px",
+                      "stack-sm": "8px",
+                      "unit": "4px",
+                      "margin-desktop": "40px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-sm": [
+                              "Manrope"
+                      ],
+                      "label-md": [
+                              "Manrope"
+                      ],
+                      "headline-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg-mobile": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-sm": [
+                              "Hanken Grotesk"
+                      ],
+                      "display-currency": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-lg": [
+                              "Manrope"
+                      ],
+                      "body-md": [
+                              "Manrope"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-currency": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "letterSpacing": "-0.03em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Ambient Backgrounds */
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #5e5ce6 0%, #4441cc 100%);
+        }
+        .bg-gradient-mesh {
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(242,88%,60%,1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, hsla(242,100%,70%,1) 0px, transparent 50%);
+        }
+        
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Hide scrollbar for clean horizontal lists */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-sm min-h-screen flex flex-col overflow-x-hidden antialiased pb-[100px]">
+<!-- Main Container (Mobile Constrained) -->
+<div class="w-full max-w-md mx-auto relative min-h-screen shadow-2xl bg-surface-container-lowest sm:rounded-3xl sm:my-8 overflow-hidden">
+<!-- TopAppBar / Hero Area -->
+<div class="bg-gradient-primary bg-gradient-mesh rounded-b-[40px] pt-12 pb-8 px-margin-mobile relative overflow-hidden shadow-lg z-10">
+<!-- Decorative wave element -->
+<div class="absolute bottom-0 left-0 w-full h-32 opacity-20 pointer-events-none" style="background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #fff 1px, transparent 2px, transparent 100%); background-size: 20px 20px;"></div>
+<!-- Header Content -->
+<header class="flex justify-between items-center w-full mb-8 relative z-20">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-white/20">
+<img alt="User profile photo of Oliver Bennet" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPnwup7nzZvstNf6vGpxqKwZQVLcTaC9c_KdHKOF94EqrYJ1peqqF8AFMd2VPvt91-8ZfCYhbEhGLHUpziMnMLhiLDlb-yDT78ObnBJhlERnS70VLstnr7P15GvJXmbgE4QelOldkFmdhfvCeH12lxxwZjmFrl6ldLp0k1O4CXWrL1PonZmklVUMclqnGEzq8-xHUR5_tdN_Ocr1GOwt0bJhPMqp3vY2eJcIEyXTFxFOmCHGjHI7wHCvrhOZLgoExaIbV0akdVwCAW"/>
+</div>
+<div class="flex flex-col">
+<span class="text-on-primary-container opacity-80 text-body-sm font-body-sm">Good Day!</span>
+<h1 class="text-on-primary text-headline-sm font-headline-sm font-bold">Oliver Bennet</h1>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-on-primary hover:bg-white/20 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+</header>
+<!-- Balance Card Content -->
+<div class="relative z-20">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-on-primary-container opacity-80 text-body-md font-body-md">Account Balance</span>
+<span class="material-symbols-outlined text-on-primary-container opacity-80 text-[16px]">visibility</span>
+</div>
+<div class="text-on-primary text-display-currency font-display-currency font-bold mb-1 tracking-tight">
+                    $ 12,540,000
+                </div>
+<div class="text-on-primary-container opacity-80 text-body-sm font-body-sm mb-8">
+                    Account no: *** *** 3569
+                </div>
+<!-- Primary Actions within Hero -->
+<div class="flex gap-4">
+<button class="flex-1 glass-panel text-on-primary py-4 rounded-xl flex items-center justify-center gap-2 font-label-md text-label-md hover:bg-white/20 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">south_west</span>
+                        Add Money
+                    </button>
+<button class="flex-1 glass-panel text-on-primary py-4 rounded-xl flex items-center justify-center gap-2 font-label-md text-label-md hover:bg-white/20 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">north_east</span>
+                        Send Money
+                    </button>
+</div>
+</div>
+</div>
+<!-- Scrollable Content Area -->
+<main class="px-margin-mobile pt-stack-lg pb-stack-lg flex-1 relative z-0">
+<!-- Upgrade Banner -->
+<div class="bg-surface-container-high rounded-2xl p-4 flex items-center gap-4 mb-stack-lg shadow-sm border border-outline-variant/20 cursor-pointer hover:bg-surface-container-highest transition-colors">
+<div class="w-10 h-10 rounded-full bg-tertiary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary text-xl" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1">
+<h3 class="text-on-surface font-label-md text-body-md font-bold">Upgrade Account</h3>
+<p class="text-on-surface-variant text-body-sm font-body-sm">Upgrade your account for more features.</p>
+</div>
+</div>
+<!-- Quick Actions Grid -->
+<section class="mb-stack-lg">
+<h2 class="text-on-surface font-headline-sm text-body-lg font-bold mb-stack-md">Quick Actions</h2>
+<div class="grid grid-cols-4 gap-3">
+<!-- Topup -->
+<button class="flex flex-col items-center gap-2 group">
+<div class="w-full aspect-square rounded-[20px] bg-primary-fixed flex items-center justify-center transition-transform group-hover:scale-105 group-active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-primary text-2xl">add</span>
+</div>
+<span class="text-on-surface-variant font-label-md text-label-md">Topup</span>
+</button>
+<!-- Bills -->
+<button class="flex flex-col items-center gap-2 group">
+<div class="w-full aspect-square rounded-[20px] bg-secondary-fixed flex items-center justify-center transition-transform group-hover:scale-105 group-active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-secondary text-2xl">receipt_long</span>
+</div>
+<span class="text-on-surface-variant font-label-md text-label-md">Bills</span>
+</button>
+<!-- Savings -->
+<button class="flex flex-col items-center gap-2 group">
+<div class="w-full aspect-square rounded-[20px] bg-tertiary-fixed flex items-center justify-center transition-transform group-hover:scale-105 group-active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-tertiary text-2xl">savings</span>
+</div>
+<span class="text-on-surface-variant font-label-md text-label-md">Savings</span>
+</button>
+<!-- Cards -->
+<button class="flex flex-col items-center gap-2 group">
+<div class="w-full aspect-square rounded-[20px] bg-surface-container-highest flex items-center justify-center transition-transform group-hover:scale-105 group-active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-2xl">credit_card</span>
+</div>
+<span class="text-on-surface-variant font-label-md text-label-md">Cards</span>
+</button>
+</div>
+</section>
+<!-- Recent Transactions -->
+<section>
+<div class="flex justify-between items-center mb-stack-md">
+<h2 class="text-on-surface font-headline-sm text-body-lg font-bold">Recent Transactions</h2>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface text-sm">tune</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<!-- Transaction 1 -->
+<div class="flex items-center justify-between p-3 rounded-2xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center group-hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">south_west</span>
+</div>
+<div>
+<div class="text-on-surface font-label-md text-body-md font-bold">Mitchell Ramos</div>
+<div class="text-on-surface-variant text-body-sm font-body-sm mt-0.5">Monday 03, 12:07 PM</div>
+</div>
+</div>
+<div class="text-right">
+<div class="text-[#00C48C] font-label-md text-body-md font-bold">+₹ 200.00</div>
+<div class="text-on-surface-variant text-body-sm font-body-sm mt-0.5">Transfer</div>
+</div>
+</div>
+<!-- Transaction 2 -->
+<div class="flex items-center justify-between p-3 rounded-2xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center group-hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">north_east</span>
+</div>
+<div>
+<div class="text-on-surface font-label-md text-body-md font-bold">+91 8547937420</div>
+<div class="text-on-surface-variant text-body-sm font-body-sm mt-0.5">Sunday 02, 12:07 PM</div>
+</div>
+</div>
+<div class="text-right">
+<div class="text-error font-label-md text-body-md font-bold">-₹ 347.00</div>
+<div class="text-on-surface-variant text-body-sm font-body-sm mt-0.5">Topup</div>
+</div>
+</div>
+<!-- Transaction 3 -->
+<div class="flex items-center justify-between p-3 rounded-2xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center group-hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">north_east</span>
+</div>
+<div>
+<div class="text-on-surface font-label-md text-body-md font-bold">Paul Francis</div>
+<div class="text-on-surface-variant text-body-sm font-body-sm mt-0.5">Saturday 01, 09:15 AM</div>
+</div>
+</div>
+<div class="text-right">
+<div class="text-[#00C48C] font-label-md text-body-md font-bold">+₹ 5000.00</div>
+<div class="text-on-surface-variant text-body-sm font-body-sm mt-0.5">Transfer</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Shared Component) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface/80 backdrop-blur-xl dark:bg-inverse-surface/80 border-t-0 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-2xl sm:absolute sm:bottom-0">
+<!-- Home (Active) -->
+<button class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim bg-secondary-container/20 rounded-xl px-4 py-2 hover:bg-secondary-container/30 transition-colors scale-100">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-body-sm font-body-sm font-bold">Home</span>
+</button>
+<!-- Cards -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-colors px-2 py-2 group">
+<span class="material-symbols-outlined mb-1 group-hover:-translate-y-1 transition-transform">credit_card</span>
+<span class="text-body-sm font-body-sm">Cards</span>
+</button>
+<!-- Status -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-colors px-2 py-2 group">
+<span class="material-symbols-outlined mb-1 group-hover:-translate-y-1 transition-transform">bar_chart</span>
+<span class="text-body-sm font-body-sm">Status</span>
+</button>
+<!-- History -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-colors px-2 py-2 group">
+<span class="material-symbols-outlined mb-1 group-hover:-translate-y-1 transition-transform">history</span>
+<span class="text-body-sm font-body-sm">History</span>
+</button>
+<!-- Settings -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-colors px-2 py-2 group">
+<span class="material-symbols-outlined mb-1 group-hover:-translate-y-1 transition-transform">settings</span>
+<span class="text-body-sm font-body-sm">Settings</span>
+</button>
+</nav>
+</div>
+</body></html>

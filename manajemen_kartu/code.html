@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Cards</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#fefcff",
+                        "on-primary-fixed": "#0c006b",
+                        "on-background": "#1a1c1f",
+                        "on-secondary-fixed-variant": "#004493",
+                        "primary-fixed-dim": "#c2c1ff",
+                        "secondary-container": "#0070eb",
+                        "tertiary-fixed": "#f6d9ff",
+                        "on-tertiary-fixed-variant": "#7201a2",
+                        "background": "#f9f9fe",
+                        "inverse-surface": "#2e3034",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#feeeff",
+                        "outline": "#777586",
+                        "on-surface": "#1a1c1f",
+                        "surface-container": "#ededf2",
+                        "on-primary-container": "#f4f1ff",
+                        "surface-container-low": "#f3f3f8",
+                        "on-primary-fixed-variant": "#332dbc",
+                        "primary": "#4441cc",
+                        "inverse-primary": "#c2c1ff",
+                        "secondary": "#0058bc",
+                        "primary-container": "#5e5ce6",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f9f9fe",
+                        "surface-dim": "#d9dade",
+                        "tertiary-fixed-dim": "#e8b3ff",
+                        "tertiary-container": "#9f42ce",
+                        "surface-tint": "#4d4ad5",
+                        "secondary-fixed": "#d8e2ff",
+                        "outline-variant": "#c7c4d7",
+                        "on-surface-variant": "#464554",
+                        "tertiary": "#8423b3",
+                        "inverse-on-surface": "#f0f0f5",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f9f9fe",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e2e2e7",
+                        "surface-container-high": "#e8e8ed",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#310048",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e2e2e7",
+                        "on-secondary-fixed": "#001a41",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#e2dfff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "stack-lg": "24px",
+                        "stack-sm": "8px",
+                        "unit": "4px",
+                        "margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-sm": ["Manrope"],
+                        "label-md": ["Manrope"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "display-currency": ["Hanken Grotesk"],
+                        "body-lg": ["Manrope"],
+                        "body-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-currency": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            -webkit-font-smoothing: antialiased;
+        }
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, theme('colors.primary-container'), theme('colors.primary'));
+        }
+        .bg-gradient-secondary {
+            background: linear-gradient(135deg, theme('colors.secondary-container'), theme('colors.secondary'));
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        /* Hide scrollbar for carousel */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-24 md:pb-0 flex flex-col font-body-md">
+<!-- TopAppBar -->
+<header class="docked full-width top-0 bg-transparent flex justify-between items-center w-full px-margin-mobile pt-stack-md z-40 bg-gradient-to-b from-surface to-transparent">
+<div class="flex items-center gap-3">
+<img alt="User profile photo of Oliver Bennet" class="w-10 h-10 rounded-full border-2 border-white/20 shadow-sm" data-alt="A close up portrait of a young professional man with short dark hair, wearing a casual blue shirt, looking friendly. The background is a soft, solid pastel color, fitting a modern light-mode app aesthetic. The image is circular and acts as an avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYFWY-91SrwodrTCf-Tm5UMOzdt3BVPUVU0qygBo2N1jeor6Myufy6KjrsAvQZip9RrCI64NDfybaNCr3cvq67INyAivBIBpm7rc19KnmCPgM8goCCIvLdF_5e27KPdB78D4chaYam5Oq39sQLMHtGuupNVlKYdct2xgUHCQZvvXWpjbtJqTpMG57EkykHdf0FhLklqW8-SybCf_ylfNJSR4cVvNstmjNo9kGHtb-nl-zHBeFuFiR50zBvuWwvHiAFC-QsYEiT7UHT"/>
+<div>
+<h1 class="text-headline-sm-mobile font-headline-sm-mobile text-on-surface">My Cards</h1>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</header>
+<main class="flex-1 px-margin-mobile pt-stack-lg max-w-md mx-auto w-full flex flex-col gap-stack-lg">
+<!-- Cards Carousel Section -->
+<section class="w-full relative">
+<div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-4" id="card-carousel">
+<!-- Primary Card -->
+<div class="snap-center shrink-0 w-full md:w-[320px] h-[200px] rounded-[24px] bg-gradient-primary p-6 flex flex-col justify-between shadow-lg relative overflow-hidden text-white group">
+<!-- Decorative background rings -->
+<div class="absolute -right-10 -top-10 w-40 h-40 rounded-full border-[10px] border-white/10 opacity-50"></div>
+<div class="absolute -bottom-10 -left-10 w-32 h-32 rounded-full border-[10px] border-white/10 opacity-50"></div>
+<div class="flex justify-between items-start relative z-10">
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium tracking-wider opacity-90">Debit Card</span>
+</div>
+<span class="material-symbols-outlined text-3xl">contactless</span>
+</div>
+<div class="flex flex-col relative z-10 mt-auto">
+<span class="font-display-currency text-display-currency tracking-widest mb-1 group-hover:blur-[2px] transition-all">**** **** **** 3569</span>
+<div class="flex justify-between items-center text-sm opacity-80 group-hover:opacity-100 transition-opacity">
+<span>Oliver Bennet</span>
+<span>12/26</span>
+</div>
+</div>
+</div>
+<!-- Secondary Card -->
+<div class="snap-center shrink-0 w-full md:w-[320px] h-[200px] rounded-[24px] bg-gradient-secondary p-6 flex flex-col justify-between shadow-lg relative overflow-hidden text-white group">
+<div class="flex justify-between items-start relative z-10">
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium tracking-wider opacity-90">Credit Card</span>
+</div>
+<span class="material-symbols-outlined text-3xl">contactless</span>
+</div>
+<div class="flex flex-col relative z-10 mt-auto">
+<span class="font-display-currency text-display-currency tracking-widest mb-1 group-hover:blur-[2px] transition-all">**** **** **** 8210</span>
+<div class="flex justify-between items-center text-sm opacity-80 group-hover:opacity-100 transition-opacity">
+<span>Oliver Bennet</span>
+<span>08/25</span>
+</div>
+</div>
+</div>
+<!-- Virtual Card (Glassmorphism) -->
+<div class="snap-center shrink-0 w-full md:w-[320px] h-[200px] rounded-[24px] bg-surface-container-high border border-outline-variant/30 p-6 flex flex-col justify-between shadow-sm relative overflow-hidden text-on-surface group">
+<div class="flex justify-between items-start relative z-10">
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium tracking-wider opacity-70">Virtual Card</span>
+</div>
+<span class="material-symbols-outlined text-3xl text-primary">credit_card</span>
+</div>
+<div class="flex flex-col relative z-10 mt-auto">
+<span class="font-display-currency text-display-currency tracking-widest mb-1 text-on-surface">**** **** **** 1102</span>
+<div class="flex justify-between items-center text-sm opacity-70">
+<span>Oliver Bennet</span>
+<span>01/27</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Carousel Indicators -->
+<div class="flex justify-center gap-2 mt-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+</div>
+</section>
+<!-- Quick Actions Bento Grid -->
+<section class="grid grid-cols-3 gap-3">
+<button class="bg-surface-container-lowest rounded-2xl p-4 flex flex-col items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:bg-surface-container-low transition-colors active:scale-95 group">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/10 flex items-center justify-center text-tertiary group-hover:bg-tertiary-container/20 transition-colors">
+<span class="material-symbols-outlined">ac_unit</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Freeze</span>
+</button>
+<button class="bg-surface-container-lowest rounded-2xl p-4 flex flex-col items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:bg-surface-container-low transition-colors active:scale-95 group">
+<div class="w-12 h-12 rounded-full bg-secondary-container/10 flex items-center justify-center text-secondary group-hover:bg-secondary-container/20 transition-colors">
+<span class="material-symbols-outlined">password</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">PIN</span>
+</button>
+<button class="bg-surface-container-lowest rounded-2xl p-4 flex flex-col items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:bg-surface-container-low transition-colors active:scale-95 group">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center text-primary group-hover:bg-primary-container/20 transition-colors">
+<span class="material-symbols-outlined">info</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Details</span>
+</button>
+</section>
+<!-- Recent Card Transactions -->
+<section class="bg-surface-container-lowest rounded-[32px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col gap-4 mb-6">
+<div class="flex justify-between items-center mb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Card Activity</h2>
+<button class="text-primary font-label-md text-label-md">View All</button>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Transaction Item -->
+<div class="flex items-center justify-between group hover:bg-surface-container-low p-2 -mx-2 rounded-xl transition-colors cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">shopping_cart</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg text-on-surface">Grocery Store</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Today, 10:24 AM</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-body-lg text-body-lg text-on-surface font-semibold">-$84.50</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">**** 3569</span>
+</div>
+</div>
+<!-- Transaction Item -->
+<div class="flex items-center justify-between group hover:bg-surface-container-low p-2 -mx-2 rounded-xl transition-colors cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg text-on-surface">Cafe Mocha</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Yesterday, 02:15 PM</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-body-lg text-body-lg text-on-surface font-semibold">-$12.00</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">**** 3569</span>
+</div>
+</div>
+<!-- Transaction Item -->
+<div class="flex items-center justify-between group hover:bg-surface-container-low p-2 -mx-2 rounded-xl transition-colors cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">subscriptions</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg text-on-surface">Netflix</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Oct 12, 08:00 AM</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-body-lg text-body-lg text-on-surface font-semibold">-$15.99</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">**** 8210</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden docked full-width bottom-0 rounded-t-lg bg-surface/80 backdrop-blur-xl border-t border-outline-variant/30 shadow-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 dark:bg-inverse-surface/80">
+<!-- Inactive -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-colors active:scale-90 duration-150 gap-1 w-16" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="font-body-sm text-body-sm">Home</span>
+</a>
+<!-- Active -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim bg-secondary-container/20 rounded-xl px-3 py-1 hover:text-primary transition-colors active:scale-90 duration-150 gap-1 w-16" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">credit_card</span>
+<span class="font-body-sm text-body-sm font-semibold">Cards</span>
+</a>
+<!-- Inactive -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-colors active:scale-90 duration-150 gap-1 w-16" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">bar_chart</span>
+<span class="font-body-sm text-body-sm">Status</span>
+</a>
+<!-- Inactive -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-colors active:scale-90 duration-150 gap-1 w-16" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">history</span>
+<span class="font-body-sm text-body-sm">History</span>
+</a>
+<!-- Inactive -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-colors active:scale-90 duration-150 gap-1 w-16" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-body-sm text-body-sm">Settings</span>
+</a>
+</nav>
+<!-- Desktop Nav Sidebar placeholder for completeness (hidden on mobile) -->
+<aside class="hidden md:flex flex-col fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-surface-variant p-6 z-40">
+<div class="mb-10 text-headline-sm font-headline-sm text-primary font-bold">Finance App</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md text-base">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary-container/20 text-primary font-semibold transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">credit_card</span>
+<span class="font-label-md text-label-md text-base">Cards</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="font-label-md text-label-md text-base">Status</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md text-base">History</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md text-base">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Spacer for desktop layout -->
+<div class="hidden md:block w-64 flex-shrink-0 absolute left-0 h-screen pointer-events-none"></div>
+</body></html>
