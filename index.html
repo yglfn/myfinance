@@ -573,11 +573,18 @@
             </div>
             <div class="settings-row-action"><span class="material-symbols-rounded" style="color:var(--outline);font-size:20px">chevron_right</span></div>
           </div>
-          <div class="settings-row" onclick="fullLogout()" style="cursor:pointer">
+          <div class="settings-row" onclick="confirmLogout()" style="cursor:pointer">
             <div class="settings-row-icon" style="background:var(--error-container);color:var(--error)"><span class="material-symbols-rounded" style="font-size:20px">logout</span></div>
             <div class="settings-row-info">
               <div class="settings-row-title" style="color:var(--error)">Keluar</div>
               <div class="settings-row-desc">Hapus sesi dan kembali ke halaman masuk</div>
+            </div>
+          </div>
+          <div class="settings-row" onclick="confirmDeleteAccount()" style="cursor:pointer">
+            <div class="settings-row-icon" style="background:var(--error-container);color:var(--error)"><span class="material-symbols-rounded" style="font-size:20px">delete_forever</span></div>
+            <div class="settings-row-info">
+              <div class="settings-row-title" style="color:var(--error)">Hapus Akun</div>
+              <div class="settings-row-desc">Hapus semua data secara permanen</div>
             </div>
           </div>
         </div>
@@ -744,9 +751,9 @@
 
     // ===== AUTH STATE =====
     function getAuthData() { try { return JSON.parse(localStorage.getItem(AUTH_KEY)) || null; } catch { return null; } }
-    function getSession() { try { return JSON.parse(sessionStorage.getItem(SESSION_KEY)) || null; } catch { return null; } }
-    function setSession(data) { sessionStorage.setItem(SESSION_KEY, JSON.stringify(data)); }
-    function clearSession() { sessionStorage.removeItem(SESSION_KEY); }
+    function getSession() { try { return JSON.parse(localStorage.getItem(SESSION_KEY)) || null; } catch { return null; } }
+    function setSession(data) { localStorage.setItem(SESSION_KEY, JSON.stringify(data)); }
+    function clearSession() { localStorage.removeItem(SESSION_KEY); }
 
     function getLockout() {
       try {
@@ -915,7 +922,6 @@
       updatePinDots();
       if (pinBuffer.length === PIN_LENGTH) setTimeout(verifyPin, 150);
     }
-
     function pinDelete() {
       pinBuffer = pinBuffer.slice(0, -1);
       updatePinDots();
@@ -1038,6 +1044,29 @@
       );
     }
 
+    function confirmDeleteAccount() {
+      showGenericDialog(
+        '<span class="material-symbols-rounded" style="font-size:40px;color:var(--error)">delete_forever</span>',
+        'Hapus Akun?',
+        'Tindakan ini tidak dapat dibatalkan. Semua data akun, PIN, dan transaksi lokal akan dihapus permanen.',
+        'Hapus Permanen',
+        deleteAccount
+      );
+    }
+
+    function deleteAccount() {
+      localStorage.removeItem(AUTH_KEY);
+      localStorage.removeItem(SESSION_KEY);
+      localStorage.removeItem(LOCKOUT_KEY);
+      localStorage.removeItem(ATTEMPTS_KEY);
+      localStorage.removeItem('lumina_transactions');
+      localStorage.removeItem('lumina_sheet_url');
+      localStorage.removeItem('lumina_last_sync');
+      clearTimeout(autoLockTimer);
+      showToast('Akun berhasil dihapus');
+      showScreen('register');
+    }
+
     // ===== SET PIN (called from within app) =====
     async function setupPin(pin) {
       const auth = getAuthData();
@@ -1064,12 +1093,13 @@
         // No account yet, show register
         showScreen('register');
       } else if (session) {
-        // Has session
+        // Has session - show PIN lock if PIN is set, otherwise go straight to app
         if (auth.pinHash) { showLockScreen(); }
         else { showApp(); }
       } else {
-        // Has account but no session
-        showScreen('login');
+        // No session - if PIN is set, show PIN lock; otherwise show login
+        if (auth.pinHash) { showLockScreen(); }
+        else { showScreen('login'); }
       }
     }
 
