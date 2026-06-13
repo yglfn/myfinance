@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <title>FinSmart</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -645,11 +646,11 @@
       <div class="settings-section">
         <h3 style="font-size:14px;font-weight:600;color:var(--on-surface-variant);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Data</h3>
         <div class="settings-card">
-          <div class="settings-row" onclick="exportCSV()" style="cursor:pointer">
-            <div class="settings-row-icon" style="background:#d4edda;color:#28a745"><span class="material-symbols-rounded" style="font-size:20px">download</span></div>
+          <div class="settings-row" onclick="exportPDF()" style="cursor:pointer">
+            <div class="settings-row-icon" style="background:#d4edda;color:#28a745"><span class="material-symbols-rounded" style="font-size:20px">picture_as_pdf</span></div>
             <div class="settings-row-info">
-              <div class="settings-row-title">Ekspor CSV</div>
-              <div class="settings-row-desc">Unduh semua transaksi sebagai file CSV</div>
+              <div class="settings-row-title">Ekspor PDF</div>
+              <div class="settings-row-desc">Unduh laporan laba rugi sebagai file PDF</div>
             </div>
           </div>
           <div class="settings-row" onclick="document.getElementById('importInput').click()" style="cursor:pointer">
@@ -708,7 +709,7 @@
 
       <div class="form-group">
         <label class="form-label">Amount</label>
-        <input type="number" class="form-input" id="inputAmount" placeholder="0" min="0" step="1" inputmode="numeric">
+        <input type="text" class="form-input" id="inputAmount" placeholder="0" inputmode="numeric" autocomplete="off">
       </div>
 
       <div class="form-group">
@@ -871,6 +872,19 @@
     document.addEventListener('DOMContentLoaded', () => {
       const pwInput = document.getElementById('regPassword');
       if (pwInput) pwInput.addEventListener('input', () => checkPwStrength(pwInput.value));
+      
+      // ===== AMOUNT FORMATTER =====
+      const amountInput = document.getElementById('inputAmount');
+      if (amountInput) {
+        amountInput.addEventListener('input', (e) => {
+          let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+          if (value) {
+            // Format with thousand separators (Indonesian format: 1.000.000)
+            value = parseInt(value, 10).toLocaleString('id-ID');
+          }
+          e.target.value = value;
+        });
+      }
     });
 
     function checkPwStrength(pw) {
@@ -1282,7 +1296,7 @@
         if (tx) {
           currentType = tx.type;
           selectedCategory = tx.category;
-          document.getElementById('inputAmount').value = tx.amount;
+          document.getElementById('inputAmount').value = tx.amount.toLocaleString('id-ID');
           document.getElementById('inputDesc').value = tx.description;
           document.getElementById('inputDate').value = tx.date;
           document.getElementById('btnDelete').style.display = 'block';
@@ -1328,7 +1342,8 @@
 
     // ===== CRUD =====
     function saveTransaction() {
-      const amount = parseFloat(document.getElementById('inputAmount').value);
+      const amountStr = document.getElementById('inputAmount').value.replace(/\./g, '').replace(/,/g, '');
+      const amount = parseFloat(amountStr);
       const desc = document.getElementById('inputDesc').value.trim();
       const date = document.getElementById('inputDate').value;
 
@@ -1791,24 +1806,161 @@
     }
 
     // ===== CSV EXPORT / IMPORT =====
-    function exportCSV() {
+    function exportPDF() {
       if (transactions.length === 0) { showToast('Tidak ada data untuk diekspor'); return; }
-      const headers = ['id', 'type', 'amount', 'description', 'category', 'date', 'createdAt'];
-      const escapeCSV = v => {
-        const s = String(v || '');
-        return s.includes(',') || s.includes('"') || s.includes('\n') ? '"' + s.replace(/"/g, '""') + '"' : s;
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF('l', 'mm', 'a4'); // Landscape
+      const pageWidth = 297;
+      const pageHeight = 210;
+      const marginLeft = 15;
+      const marginRight = 15;
+      const contentWidth = pageWidth - marginLeft - marginRight;
+      let y = 15;
+
+      // Helper: format currency
+      const formatIDR = (num) => {
+        return num.toLocaleString('id-ID');
       };
-      let csv = headers.join(',') + '\n';
-      transactions.forEach(tx => {
-        csv += headers.map(h => escapeCSV(tx[h])).join(',') + '\n';
+
+      // Helper: format date
+      const formatDate = (dateStr) => {
+        const d = new Date(dateStr);
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const year = d.getFullYear();
+        return day + '-' + month + '-' + year;
+      };
+
+      // Helper: get category label
+      const getCatLabel = (catId) => {
+        const allCats = [...CATEGORIES.income, ...CATEGORIES.expense];
+        const found = allCats.find(c => c.id === catId);
+        return found ? found.label : catId;
+      };
+
+      // Sort transactions by date
+      const sortedTx = [...transactions].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      // Get period
+      const firstDate = new Date(sortedTx[0].date);
+      const lastDate = new Date(sortedTx[sortedTx.length - 1].date);
+      const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+      
+      // Calculate totals
+      let totalIncome = 0;
+      let totalExpense = 0;
+      sortedTx.forEach(tx => {
+        if (tx.type === 'income') totalIncome += tx.amount;
+        else totalExpense += tx.amount;
       });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'My_finance_' + new Date().toISOString().slice(0, 10) + '.csv';
-      link.click();
-      URL.revokeObjectURL(link.href);
-      showToast('Data berhasil diekspor');
+      const saldo = totalIncome - totalExpense;
+
+      // ===== TITLE =====
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('LAPORAN TRANSAKSI KEUANGAN', pageWidth / 2, y, { align: 'center' });
+      y += 7;
+
+      // ===== PERIOD =====
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      const periodStart = '01 ' + months[firstDate.getMonth()] + ' ' + firstDate.getFullYear();
+      const lastDay = new Date(lastDate.getFullYear(), lastDate.getMonth() + 1, 0).getDate();
+      const periodEnd = lastDay + ' ' + months[lastDate.getMonth()] + ' ' + lastDate.getFullYear();
+      doc.text('Periode : ' + periodStart + ' - ' + periodEnd, pageWidth / 2, y, { align: 'center' });
+      y += 8;
+
+      // Top line
+      doc.setLineWidth(0.5);
+      doc.line(marginLeft, y, pageWidth - marginRight, y);
+      y += 5;
+
+      // ===== TABLE HEADER =====
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      const colNo = marginLeft;
+      const colTanggal = marginLeft + 12;
+      const colKategori = marginLeft + 35;
+      const colKeterangan = marginLeft + 80;
+      const colJumlah = pageWidth - marginRight;
+
+      doc.text('No', colNo, y);
+      doc.text('Tanggal', colTanggal, y);
+      doc.text('Kategori', colKategori, y);
+      doc.text('Keterangan', colKeterangan, y);
+      doc.text('Jumlah', colJumlah, y, { align: 'right' });
+      y += 3;
+
+      // Header line
+      doc.setLineWidth(0.3);
+      doc.line(marginLeft, y, pageWidth - marginRight, y);
+      y += 5;
+
+      // ===== TABLE ROWS =====
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+
+      sortedTx.forEach((tx, index) => {
+        // Check if we need a new page
+        if (y > pageHeight - 30) {
+          doc.addPage();
+          y = 15;
+        }
+
+        const no = String(index + 1);
+        const tanggal = formatDate(tx.date);
+        const kategori = getCatLabel(tx.category);
+        const keterangan = tx.description || '-';
+        const jumlah = (tx.type === 'income' ? '+' : '-') + ' ' + formatIDR(tx.amount);
+
+        doc.text(no, colNo, y);
+        doc.text(tanggal, colTanggal, y);
+        doc.text(kategori, colKategori, y);
+        doc.text(keterangan.substring(0, 40), colKeterangan, y); // Truncate long descriptions
+        doc.text(jumlah, colJumlah, y, { align: 'right' });
+        y += 6;
+      });
+
+      // Bottom line
+      y += 2;
+      doc.setLineWidth(0.3);
+      doc.line(marginLeft, y, pageWidth - marginRight, y);
+      y += 6;
+
+      // ===== SUMMARY =====
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      
+      const summaryX = marginLeft + 100;
+      const summaryValueX = pageWidth - marginRight;
+
+      doc.text('Total Pemasukan', summaryX, y);
+      doc.text(': ' + formatIDR(totalIncome), summaryValueX, y, { align: 'right' });
+      y += 6;
+
+      doc.text('Total Pengeluaran', summaryX, y);
+      doc.text(': ' + formatIDR(totalExpense), summaryValueX, y, { align: 'right' });
+      y += 6;
+
+      doc.setLineWidth(0.5);
+      doc.line(summaryX, y, summaryValueX, y);
+      y += 6;
+
+      doc.setFontSize(11);
+      doc.text('Saldo', summaryX, y);
+      doc.text(': ' + formatIDR(saldo), summaryValueX, y, { align: 'right' });
+      y += 5;
+
+      // Bottom double line
+      doc.setLineWidth(0.5);
+      doc.line(summaryX, y, summaryValueX, y);
+
+      // Save
+      const today = new Date();
+      const filename = 'Laporan_Keuangan_' + today.toISOString().slice(0, 10) + '.pdf';
+      doc.save(filename);
+      showToast('Laporan PDF berhasil diekspor');
     }
 
     function importCSV(input) {
